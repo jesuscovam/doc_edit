@@ -7,16 +7,15 @@ from utils import Propietario
 document = docx.Document('base.docx')
 xlsx = pd.ExcelFile('demo_ccm.xlsx')
 df = pd.read_excel(xlsx)
-department_propietario = dict(zip(df['depa'], df['propietario']))
-department_genre = dict(zip(df['depa'], df['genre']))
-one_amount = True
-two_amount = False
+apartment_owner = dict(zip(df['apartment'], df['propietario']))
+owner_genre = dict(zip(df['apartment'], df['genre']))
 
-for department in df['depa']:
+
+for apartment in df['apartment']:
     prop = Propietario(
-        department_propietario[department],
-        department,
-        department_genre[department],
+        apartment_owner[apartment],
+        apartment,
+        owner_genre[apartment],
         0,
         0
         )
@@ -25,15 +24,15 @@ for department in df['depa']:
         if 'PROPIETARIO' in paragraph.text:
             if prop.genre == 'female':
                 paragraph.text = 'Estimada ' + prop.name +  \
-                    'propietaria del ' + str(prop.department)
+                    'propietaria del ' + str(prop.apartment)
             else:
                 paragraph.text = 'Estimado ' + prop.name + \
-                    'propietario del' + str(prop.department)
+                    'propietario del' + str(prop.apartment)
         elif 'PROPIETARY_ENGLISH' in paragraph.text:
             paragraph.text = 'Dear ' + prop.name + \
-                'owner of department ' + str(prop.department)
+                'owner of apartment ' + str(prop.apartment)
         
         style = document.styles['Normal']
         style.font.name = 'Calibri'
         style.font.size = Pt(16)
-        document.save(str(prop.department) + 'base.docx')
+        document.save(str(prop.apartment) + 'base.docx')
