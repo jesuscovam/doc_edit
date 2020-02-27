@@ -2,7 +2,7 @@ import docx
 import pandas as pd
 import numpy as np
 from docx.shared import Pt
-from utils import propietario
+from utils import Propietario
 
 document = docx.Document('base.docx')
 xlsx = pd.ExcelFile('demo_ccm.xlsx')
@@ -13,7 +13,7 @@ one_amount = True
 two_amount = False
 
 for department in df['depa']:
-    prop = propietario(
+    prop = Propietario(
         department_propietario[department],
         department,
         department_genre[department],
